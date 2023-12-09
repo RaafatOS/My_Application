@@ -14,8 +14,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapsFragment : Fragment() {
+//private const val ARG_TOILETTES = "param1"
+class MapsFragment : Fragment(), OnMapReadyCallback {
+    private lateinit var googleMap: GoogleMap
+    private var toiletList: List<Toilet> = emptyList()
 
+    fun setToiletList(toilets: List<Toilet>) {
+        toiletList = toilets
+    }
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -26,9 +32,15 @@ class MapsFragment : Fragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val gardanne = LatLng(43.452277, 5.469722)
+        googleMap.addMarker(MarkerOptions().position(gardanne).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(gardanne))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
+        for (toilet in toiletList) {
+            val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
+            googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.OpeningHours))
+        }
+
     }
 
     override fun onCreateView(
@@ -43,5 +55,21 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+    override fun onMapReady(gMap: GoogleMap) {
+        googleMap = gMap
+
+        // Add markers for each toilet in the list
+        for (toilet in toiletList) {
+            val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
+            googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.OpeningHours))
+        }
+
+        // Center the camera based on the first toilet in the list
+        if (toiletList.isNotEmpty()) {
+            val firstToilet = toiletList[0]
+            val firstToiletLatLng = LatLng(firstToilet.PointGeo.lat, firstToilet.PointGeo.lon)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstToiletLatLng, 10f))
+        }
     }
 }
