@@ -16,6 +16,7 @@ import com.example.myapplication.placeholder.PlaceholderContent
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
+    private lateinit var toilettes: ArrayList<toilet>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = MyItemRecyclerViewAdapter(toilettes.toList())
             }
         }
         return view

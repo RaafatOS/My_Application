@@ -14,7 +14,7 @@ import com.example.myapplication.databinding.FragmentItemBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val toilettes: List<toilet>
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,20 +30,22 @@ class MyItemRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        val item = toilettes[position]
+        holder.txvid.text = item.Id
+        holder.txvcode.text = item.Code_Postal
+        holder.txvcomune.text = item.Commune
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = toilettes.size
 
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        val txvid = binding.rIdView
+        val txvcode = binding.rCodePView
+        val txvcomune = binding.rComuneView
 
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
+//        override fun toString(): String {
+//            return super.toString() + " '" + contentView.text + "'"
+//        }
     }
 
 }
