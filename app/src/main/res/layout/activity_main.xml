@@ -2,14 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/a_main_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_ly"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp">
 
         <com.google.android.material.tabs.TabItem
@@ -19,40 +21,32 @@
             android:text="List" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:icon="@android:drawable/ic_dialog_map"
             android:text="Map"
             tools:layout_editor_absoluteX="137dp"
             tools:layout_editor_absoluteY="2dp" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Info" />
     </com.google.android.material.tabs.TabLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/a_const"
+        android:layout_width="409dp"
+        android:layout_height="657dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="?attr/actionModeCloseDrawable"
-        app:title="Toilet finder" />
+        app:layout_constraintTop_toBottomOf="@+id/tab_ly">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
