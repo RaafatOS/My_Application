@@ -35,6 +35,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val gardanne = LatLng(43.452277, 5.469722)
         googleMap.addMarker(MarkerOptions().position(gardanne).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(gardanne))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
         for (toilet in toiletList) {
             val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
             googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.OpeningHours))
