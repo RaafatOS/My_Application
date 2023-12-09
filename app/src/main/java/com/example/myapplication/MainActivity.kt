@@ -62,16 +62,15 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
+                    0 -> displayToiletsList()
                     1 -> displayMapFragment()
+                    2 -> displauInfoFragment()
                 }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-
             }
-
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
             }
 
         })
@@ -80,13 +79,21 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
     private fun displayMapFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-
+        mapFragment.setToiletList(dataset.getAllToilets())
         // Use the same instance of MapsFragment
         transaction.replace(
             R.id.a_const,
             mapFragment
         )
+        transaction.commit()
+    }
 
+    private fun displauInfoFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(
+            R.id.a_const,
+            InfoFragment()
+        )
         transaction.commit()
     }
 
