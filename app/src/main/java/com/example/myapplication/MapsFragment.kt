@@ -1,21 +1,40 @@
 package com.example.myapplication
 
-import androidx.fragment.app.Fragment
-
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
+import android.media.audiofx.BassBoost
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.*
 
 //private const val ARG_TOILETTES = "param1"
 class MapsFragment : Fragment(), OnMapReadyCallback {
+    private var userLatitude: Double = 0.0
+    private var userLongitude: Double = 0.0
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private val permissionId = 2
     private lateinit var googleMap: GoogleMap
     private var toiletList: List<Toilet> = emptyList()
 
@@ -32,15 +51,94 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+        this.googleMap = googleMap
+        googleMap.uiSettings.isCompassEnabled = true
         val gardanne = LatLng(43.452277, 5.469722)
-        googleMap.addMarker(MarkerOptions().position(gardanne).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(gardanne))
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
         for (toilet in toiletList) {
             val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
             googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.OpeningHours))
         }
+        getLocation()
+    }
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
 
+    private fun checkPermissions(): Boolean {
+        if (requireActivity().let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            } == PackageManager.PERMISSION_GRANTED &&
+            requireActivity().let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            } == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        requireActivity().let {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ),
+                permissionId
+            )
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == permissionId) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission", "SetTextI18n")
+    private fun getLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                    val location: Location? = task.result
+                    if (location != null) {
+                        val geocoder = this.context?.let { Geocoder(it, Locale.getDefault()) }
+                        val list: List<Address> =
+                            geocoder?.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
+                        userLatitude = list[0].latitude
+                        userLongitude = list[0].longitude
+                        googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 18.0f))
+                    }
+                }
+            } else {
+//                Toast.makeText(this.context, "Please turn on location", Toast.LENGTH_LONG).show()
+//                val intent = Intent(BassBoost.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
     }
 
     override fun onCreateView(
@@ -49,6 +147,17 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
+    }
+
+    @SuppressLint("UseRequireInsteadOfGet")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mFusedLocationClient = requireActivity().let {
+            LocationServices.getFusedLocationProviderClient(
+                it
+            )
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

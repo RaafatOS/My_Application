@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -27,6 +28,15 @@ class ToiletAdapter(private var Toilets: List<Toilet>) : RecyclerView.Adapter<To
         holder.txvid.text = item.Id
         holder.txvcode.text = item.Code_Postal
         holder.txvcomune.text = item.Commune
+        holder.favbutton.setOnClickListener {
+            item.isFavorite = !item.isFavorite
+            // now we update the color of the button to reflect the new state
+            if (item.isFavorite) {
+                holder.favbutton.setColorFilter(holder.itemView.context.getColor(R.color.fav_yellow))
+            } else {
+                holder.favbutton.setColorFilter(holder.itemView.context.getColor(R.color.black))
+            }
+        }
     }
 
     override fun getItemCount(): Int = Toilets.size

@@ -8,4 +8,4 @@ data class Toilet (
     val Longitude: String,
     val OpeningHours: String,
     val ImageURL: String ?= null,
-    val isFavorite: Boolean )
+    var isFavorite: Boolean )

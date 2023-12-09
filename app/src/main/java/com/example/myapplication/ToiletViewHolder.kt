@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 
 class ToiletViewHolder(rootView : View) : RecyclerView.ViewHolder(rootView) {
@@ -10,4 +11,5 @@ class ToiletViewHolder(rootView : View) : RecyclerView.ViewHolder(rootView) {
     val txvid = rootView.findViewById<TextView>(R.id.r_id_txt)
     val txvcode = rootView.findViewById<TextView>(R.id.r_codeP_txt)
     val txvcomune = rootView.findViewById<TextView>(R.id.r_commune_txt)
+    val favbutton = rootView.findViewById<FloatingActionButton>(R.id.r_fav_button)
 }
