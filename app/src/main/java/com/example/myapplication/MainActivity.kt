@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                 if (response.isSuccessful) {
                     val toilets:List<Toilet> = response.body()!!
                     dataset.addToilets(toilets)
+                    displayToiletsList()
                 }
             }
 
