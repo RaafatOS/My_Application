@@ -8,13 +8,14 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        app:cardBackgroundColor="#9EA3F5"
+        app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="96dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/r_comune_view"
@@ -45,6 +46,14 @@
             android:layout_height="match_parent"
             android:translationX="0dp"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:translationX="200dp"
+            android:translationY="20dp" />
 
     </androidx.cardview.widget.CardView>
 
