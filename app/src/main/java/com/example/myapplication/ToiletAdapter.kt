@@ -3,6 +3,7 @@ package com.example.myapplication
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 
 import com.example.myapplication.placeholder.PlaceholderContent.PlaceholderItem
 
@@ -20,6 +21,9 @@ class ToiletAdapter(private var Toilets: List<Toilet>) : RecyclerView.Adapter<To
 
     override fun onBindViewHolder(holder: ToiletViewHolder, position: Int) {
         val item = Toilets[position]
+        Glide.with(holder.itemView.context)
+            .load(item.ImageURL)
+            .into(holder.imgid)
         holder.txvid.text = item.Id
         holder.txvcode.text = item.Code_Postal
         holder.txvcomune.text = item.Commune
