@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 private const val ARG_TOILETTES = "param1"
 
 class ToiletListFragment : Fragment(){
-    private var books: ArrayList<Toilet> = arrayListOf()
+    private var toilets: ArrayList<Toilet> = arrayListOf()
     private lateinit var bookAdapter: ToiletAdapter
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            books = it.getSerializable(ARG_TOILETTES) as ArrayList<Toilet>
+            toilets = it.getSerializable(ARG_TOILETTES) as ArrayList<Toilet>
         }
     }
 
@@ -32,7 +32,7 @@ class ToiletListFragment : Fragment(){
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
         recyclerView = view.findViewById(R.id.toilet_list_rv)
-        bookAdapter = ToiletAdapter(books)
+        bookAdapter = ToiletAdapter(toilets)
         recyclerView.adapter = bookAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addItemDecoration(
