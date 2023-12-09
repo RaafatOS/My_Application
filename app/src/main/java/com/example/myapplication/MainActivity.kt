@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                 if (response.isSuccessful) {
                     val toilets:List<Toilet> = response.body()!!
                     dataset.addToilets(toilets)
-                    displayToiletsList()
                 }
             }
 
@@ -62,6 +61,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
+                    0 -> displayToiletsList()
                     1 -> displayMapFragment()
                 }
             }
@@ -104,7 +104,8 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     private fun displayToiletsList() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(
-            R.id.r_list_fragment,
+            R.id.a_const,
             ToiletListFragment.newInstance(dataset.getAllToilets()))
+        fragmentTransaction.commit()
     }
 }
