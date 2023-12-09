@@ -7,5 +7,5 @@ data class Toilet (
     val Id: String,
     val Longitude: String,
     val OpeningHours: String,
-    val imageURL: String ?= null,
+    val ImageURL: String ?= null,
     val isFavorite: Boolean )
