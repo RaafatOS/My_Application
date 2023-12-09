@@ -58,7 +58,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
         for (toilet in toiletList) {
             val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
-            googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.OpeningHours))
+            if(toilet.isFavorite)
+                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+            else
+                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))
         }
         getLocation()
     }
@@ -128,7 +131,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         userLatitude = list[0].latitude
                         userLongitude = list[0].longitude
                         googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 18.0f))
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 12.0f))
                     }
                 }
             } else {
