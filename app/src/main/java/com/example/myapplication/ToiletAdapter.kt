@@ -72,6 +72,10 @@ class ToiletAdapter(private var Toilets: List<Toilet>) : RecyclerView.Adapter<To
         }
     }
 
+    fun refreshData(toilets: List<Toilet>) {
+        this.Toilets = toilets
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int = Toilets.size
 
 }

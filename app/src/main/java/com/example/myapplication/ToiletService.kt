@@ -15,5 +15,7 @@ interface ToiletService {
     fun addToilet(@Body toilet: Toilet): Call<Toilet>
     @PUT("toilettes/{id}")
     fun updateToilet(@Path("id") id: String): Call<JSONObject>
+    @GET("toilettes?favorites=1")
+    fun getFavToilets(): Call<List<Toilet>>
 
 }
