@@ -53,6 +53,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
          */
         this.googleMap = googleMap
         googleMap.uiSettings.isCompassEnabled = true
+        googleMap.uiSettings.isMapToolbarEnabled = true
+        googleMap.isMyLocationEnabled = true
+        googleMap.uiSettings.isZoomControlsEnabled = true
+        googleMap.uiSettings.isMyLocationButtonEnabled = true
+        googleMap.setOnMyLocationButtonClickListener { getLocation(); true }
         val gardanne = LatLng(43.452277, 5.469722)
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(gardanne))
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
@@ -130,7 +135,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                             geocoder?.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         userLatitude = list[0].latitude
                         userLongitude = list[0].longitude
-                        googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                        //googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 12.0f))
                     }
                 }

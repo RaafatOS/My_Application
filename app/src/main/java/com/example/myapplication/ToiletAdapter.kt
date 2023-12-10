@@ -60,6 +60,10 @@ class ToiletAdapter(private var Toilets: List<Toilet>) : RecyclerView.Adapter<To
                 }
             })
         }
+        // setting click listener for the whole row
+        holder.itemView.setOnClickListener {
+            Toast.makeText(holder.itemView.context, item.Id, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount(): Int = Toilets.size
