@@ -57,18 +57,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         googleMap.uiSettings.isCompassEnabled = true
         googleMap.uiSettings.isMapToolbarEnabled = true
         googleMap.uiSettings.isZoomControlsEnabled = true
-        googleMap.uiSettings.isMyLocationButtonEnabled = true
         googleMap.setOnMyLocationButtonClickListener { getLocation(); true }
-        val gardanne = LatLng(43.452277, 5.469722)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(gardanne))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
-//        for (toilet in toiletList) {
-//            val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
-//            if(toilet.isFavorite)
-//                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-//            else
-//                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))
-//        }
         getLocation()
         setUpClusterManager(googleMap)
     }
@@ -137,7 +126,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                             geocoder?.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         userLatitude = list[0].latitude
                         userLongitude = list[0].longitude
-                        googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                        //googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 14.0f))
                     }
                 }
@@ -198,6 +187,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mapClusters = getAllClusters()
         clusterManager.addItems(mapClusters)
         clusterManager.cluster()
+
+        gMap.isMyLocationEnabled = true
+        gMap.uiSettings.isMyLocationButtonEnabled = true
     }
 
     private fun getAllClusters(): List<MapCluster> {
