@@ -4,12 +4,12 @@
 
 # ToiletMergency App
 
-ToiletMergency is an Android application designed to help users find public toilets in Bouches-du-Rhône, France. It provides essential information about nearby toilets, interactive maps, and personalized features for a seamless restroom-finding experience.
+ToiletMergency is an Android application designed to help users find public toilets in Aix-Marseille-Provence, France. It provides essential information about nearby toilets, interactive maps, and personalized features for a seamless restroom-finding experience.
 
 ## Features
 
 1. **Toilet Information at Your Fingertips:**
-   - Access a comprehensive database of public toilets in Bouches-du-Rhône.
+   - Access a comprehensive database of public toilets in Aix-Marseille-Provence.
    - Get details about each toilet, including location, opening hours, and accessibility features.
 
 2. **Interactive Maps with Google Maps Integration:**
@@ -37,7 +37,7 @@ ToiletMergency is an Android application designed to help users find public toil
    - Effortlessly locate public toilets without the hassle.
 
 8. **Always Up-to-Date Toilet Information:**
-   - Continuous updates ensure the latest details about public toilets in Bouches-du-Rhône.
+   - Continuous updates ensure the latest details about public toilets in Aix-Marseille-Provence.
    - The refresh function guarantees current and accurate content.
 
 ## Installation
