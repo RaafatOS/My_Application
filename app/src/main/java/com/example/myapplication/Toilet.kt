@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+import java.io.Serializable
+
 data class Toilet (
     val Commune: String,
     val Code_Postal: String,
@@ -8,4 +10,4 @@ data class Toilet (
     val Longitude: String,
     val OpeningHours: String,
     val ImageURL: String ?= null,
-    var isFavorite: Boolean )
+    var isFavorite: Boolean ) : Serializable

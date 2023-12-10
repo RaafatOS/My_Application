@@ -16,6 +16,6 @@
 
     <style name="roundedImage">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+        <item name="cornerSize">30dp</item>
     </style>
 </resources>

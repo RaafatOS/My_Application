@@ -62,7 +62,13 @@ class ToiletAdapter(private var Toilets: List<Toilet>) : RecyclerView.Adapter<To
         }
         // setting click listener for the whole row
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, item.Id, Toast.LENGTH_SHORT).show()
+            // we create a new instance of the details fragment
+            val detailsFragment = detailsFragment.newInstance(item)
+            val transaction =
+                (holder.itemView.context as MainActivity).supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.a_const, detailsFragment)
+            transaction.addToBackStack("details")
+            transaction.commit()
         }
     }
 

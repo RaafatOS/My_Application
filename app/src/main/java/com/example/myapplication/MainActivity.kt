@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             R.id.a_const,
             mapFragment
         )
+        //transaction.addToBackStack("map")
         transaction.commit()
     }
 
@@ -94,6 +95,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             R.id.a_const,
             InfoFragment()
         )
+        //transaction.addToBackStack("info")
         transaction.commit()
     }
 
