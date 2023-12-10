@@ -58,8 +58,11 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                         Log.println(Log.INFO, "TAG", response.body().toString())
                         if (response.isSuccessful) {
                             val toilet:Toilet = response.body()!!
+                            Toast.makeText(this@MainActivity, "Toilet added", Toast.LENGTH_SHORT).show()
                             dataset.addToilet(toilet)
                             adapter.refreshData(dataset.getAllToilets())
+                            fetchToiletsFromServer()
+                            tab.getTabAt(0)?.select()
                         }
                     }
 
