@@ -181,6 +181,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private fun setUpClusterManager(gMap : GoogleMap){
         val clusterManager = ClusterManager<MapCluster>(this.context, gMap)
+        // Set your custom renderer
+        val customClusterRenderer = CustomClusterRenderer(this.context, gMap, clusterManager)
+        clusterManager.renderer = customClusterRenderer
         gMap.setOnCameraIdleListener(clusterManager)
         gMap.setOnMarkerClickListener(clusterManager)
         gMap.setOnInfoWindowClickListener(clusterManager)
@@ -190,9 +193,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         gMap.isMyLocationEnabled = true
         gMap.uiSettings.isMyLocationButtonEnabled = true
+
     }
 
     private fun getAllClusters(): List<MapCluster> {
-        return toiletList.map { MapCluster(it.Commune, it.PointGeo) }
+        return toiletList.map { MapCluster(it.Commune, it.PointGeo, it.isFavorite) }
     }
 }
