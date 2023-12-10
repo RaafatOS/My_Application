@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,9 +58,16 @@ class FavoritesActivity : AppCompatActivity() {
                 }
             }
         )
-//        val returnIntent = Intent()
-//        setResult(Activity.RESULT_OK, returnIntent)
-//        finish()
+
+        findViewById<FloatingActionButton>(R.id.toilet_fav_list_fab).setOnClickListener {
+            finish()
+        }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 
 }
