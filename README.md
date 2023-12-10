@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://f-droid.org/repo/org.woheller69.lavatories/en-US/icon_Ivd-E0kQp51JAAR2ldnvcDqlhOA8D50kun4q1qC3-g8=.png" width="200" alt="Nest Logo" /></a>
+</p>
+
 # ToiletMergency App
 
 ToiletMergency is an Android application designed to help users find public toilets in Bouches-du-Rhône, France. It provides essential information about nearby toilets, interactive maps, and personalized features for a seamless restroom-finding experience.
