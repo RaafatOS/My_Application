@@ -69,7 +69,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 //            else
 //                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))
 //        }
-        getLocation()
+        //getLocation()
         setUpClusterManager(googleMap)
     }
     private fun isLocationEnabled(): Boolean {

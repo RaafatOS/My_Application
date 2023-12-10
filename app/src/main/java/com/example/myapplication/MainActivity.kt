@@ -12,7 +12,12 @@ import com.google.android.material.tabs.TabItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.gms.maps.OnMapReadyCallback
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,10 +42,31 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     private val mapFragment: MapsFragment by lazy {
         MapsFragment()
     }
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val drawerLayout: DrawerLayout = findViewById(R.id.a_main_fragment)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> {
+                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_fav -> {
+                    Toast.makeText(this, "Fav", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_refresh -> {
+                    Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
 
         toiletService.getAllToilets().enqueue(object : Callback<List<Toilet>> {
             override fun onResponse(call: Call<List<Toilet>>, response: Response<List<Toilet>>) {
@@ -74,6 +100,13 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             }
 
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
