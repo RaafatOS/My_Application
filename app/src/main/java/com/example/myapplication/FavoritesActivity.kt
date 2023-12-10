@@ -46,7 +46,6 @@ class FavoritesActivity : AppCompatActivity() {
                         val toilets:List<Toilet> = response.body()!!
                         if (toilets != null) {
                             favDataset.addToilets(toilets)
-                            Toast.makeText(this@FavoritesActivity, "gotFav" + favDataset.size(), Toast.LENGTH_SHORT).show()
                             adapter.refreshData(favDataset.getAllToilets())
                             adapter?.notifyDataSetChanged()
                         }

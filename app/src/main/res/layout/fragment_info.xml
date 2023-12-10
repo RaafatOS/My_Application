@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#172C9E"
+    android:background="@color/lavender"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".InfoFragment">
@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#C470D3"
-        app:cardBackgroundColor="#DC6AF1"
+        app:cardBackgroundColor="#C470D3"
         app:cardCornerRadius="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="#DC6AF1"
+            android:background="#C470D3"
             android:layoutMode="opticalBounds"
             android:orientation="vertical">
 

@@ -59,19 +59,42 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
-                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+                    tab.getTabAt(0)?.select()
+                    drawerLayout.closeDrawer(navView)
                 }
                 R.id.nav_fav -> {
                     val intent = Intent(this, FavoritesActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.nav_refresh -> {
-                    Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show()
+                    fetchToiletsFromServer()
+                    tab.getTabAt(0)?.select()
+                    drawerLayout.closeDrawer(navView)
                 }
             }
             true
         }
 
+        fetchToiletsFromServer()
+
+        tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> displayToiletsList()
+                    1 -> displayMapFragment()
+                    2 -> displauInfoFragment()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+    }
+
+    private fun fetchToiletsFromServer(){
         toiletService.getAllToilets().enqueue(object : Callback<List<Toilet>> {
             override fun onResponse(call: Call<List<Toilet>>, response: Response<List<Toilet>>) {
                 Log.println(Log.INFO, "TAG", response.body().toString())
@@ -89,21 +112,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             }
         })
 
-        tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> displayToiletsList()
-                    1 -> displayMapFragment()
-                    2 -> displauInfoFragment()
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
