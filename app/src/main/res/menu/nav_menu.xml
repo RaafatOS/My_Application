@@ -18,4 +18,10 @@
             android:iconTint="@color/lavender"
             android:iconTintMode="src_over"
             android:title="Favorites" />
+        <item
+            android:id="@+id/nav_add_toilet"
+            android:icon="@drawable/baseline_add_location_24"
+            android:iconTint="@color/lavender"
+            android:iconTintMode="src_over"
+            android:title="Add a new toilet" />
 </menu>

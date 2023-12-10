@@ -15,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +47,31 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     }
     private lateinit var toggle: ActionBarDrawerToggle
 
+    private val adapter = ToiletAdapter(dataset.getAllToilets())
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                val data: Toilet = result.data?.getSerializableExtra(resultat) as Toilet
+                //Post toilet to server
+                toiletService.addToilet(data).enqueue(object : Callback<Toilet> {
+                    override fun onResponse(call: Call<Toilet>, response: Response<Toilet>) {
+                        Log.println(Log.INFO, "TAG", response.body().toString())
+                        if (response.isSuccessful) {
+                            val toilet:Toilet = response.body()!!
+                            dataset.addToilet(toilet)
+                            adapter.refreshData(dataset.getAllToilets())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Toilet>, t: Throwable) {
+                        Log.e("TAG", "onFailure: ", t)
+
+                        Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +95,11 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                 R.id.nav_refresh -> {
                     fetchToiletsFromServer()
                     tab.getTabAt(0)?.select()
+                    drawerLayout.closeDrawer(navView)
+                }
+                R.id.nav_add_toilet -> {
+                    val intent = Intent(this, AddToiletActivity::class.java)
+                    startForResult.launch(intent)
                     drawerLayout.closeDrawer(navView)
                 }
             }
