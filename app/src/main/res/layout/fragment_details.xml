@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:text="Commune :"
+        android:text="Commune"
         android:textColor="@color/lavender"
         android:textSize="18sp"
         android:textStyle="bold"></TextView>
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:text="Code Postal :"
+        android:text="Code Postal"
         android:textColor="@color/lavender"
         android:textSize="18sp"
         android:textStyle="bold"></TextView>
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:text="Opening Hours :"
+        android:text="Opening Hours"
         android:textColor="@color/lavender"
         android:textSize="18sp"
         android:textStyle="bold"></TextView>
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:text="Coordinates :"
+        android:text="Coordinates"
         android:textColor="@color/lavender"
         android:textSize="18sp"
         android:textStyle="bold"></TextView>
