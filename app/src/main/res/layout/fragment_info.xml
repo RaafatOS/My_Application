@@ -233,7 +233,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="- [Your App Name] features an intuitive design to ensure users of all backgrounds can easily navigate and find the information they need."
+                android:text="- ToiletMergency features an intuitive design to ensure users of all backgrounds can easily navigate and find the information they need."
                 android:textColor="@color/purple_700"
                 android:textSize="16sp" />
 

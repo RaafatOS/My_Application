@@ -1,11 +1,8 @@
 package com.example.myapplication
 
-import android.graphics.Color
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import com.bumptech.glide.Glide
 
 import com.example.myapplication.placeholder.PlaceholderContent.PlaceholderItem
@@ -62,10 +59,8 @@ class ToiletAdapter(private var Toilets: List<Toilet>) : RecyclerView.Adapter<To
         }
         // setting click listener for the whole row
         holder.itemView.setOnClickListener {
-            // we create a new instance of the details fragment
-            val detailsFragment = detailsFragment.newInstance(item)
-            val transaction =
-                (holder.itemView.context as MainActivity).supportFragmentManager.beginTransaction()
+            val detailsFragment = DetailsFragment.newInstance(item)
+            val transaction =(holder.itemView.context as MainActivity).supportFragmentManager.beginTransaction()
             transaction.replace(R.id.a_const, detailsFragment)
             transaction.addToBackStack("details")
             transaction.commit()

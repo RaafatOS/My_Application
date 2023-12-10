@@ -69,7 +69,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 //            else
 //                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))
 //        }
-        //getLocation()
+        getLocation()
         setUpClusterManager(googleMap)
     }
     private fun isLocationEnabled(): Boolean {
@@ -137,8 +137,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                             geocoder?.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         userLatitude = list[0].latitude
                         userLongitude = list[0].longitude
-                        //googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 12.0f))
+                        googleMap.addMarker(MarkerOptions().position(LatLng(userLatitude, userLongitude)).title("Your location"))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLatitude, userLongitude), 14.0f))
                     }
                 }
             } else {
