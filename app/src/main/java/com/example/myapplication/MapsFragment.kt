@@ -27,6 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.clustering.ClusterManager
 import java.util.*
 
 //private const val ARG_TOILETTES = "param1"
@@ -37,6 +38,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val permissionId = 2
     private lateinit var googleMap: GoogleMap
     private var toiletList: List<Toilet> = emptyList()
+    private var mapClusters: List<MapCluster> = emptyList()
 
     fun setToiletList(toilets: List<Toilet>) {
         toiletList = toilets
@@ -54,21 +56,21 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         this.googleMap = googleMap
         googleMap.uiSettings.isCompassEnabled = true
         googleMap.uiSettings.isMapToolbarEnabled = true
-        googleMap.isMyLocationEnabled = true
         googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isMyLocationButtonEnabled = true
         googleMap.setOnMyLocationButtonClickListener { getLocation(); true }
         val gardanne = LatLng(43.452277, 5.469722)
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(gardanne))
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gardanne, 12f))
-        for (toilet in toiletList) {
-            val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
-            if(toilet.isFavorite)
-                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-            else
-                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))
-        }
+//        for (toilet in toiletList) {
+//            val toiletLatLng = LatLng(toilet.PointGeo.lat, toilet.PointGeo.lon)
+//            if(toilet.isFavorite)
+//                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))?.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+//            else
+//                googleMap.addMarker(MarkerOptions().position(toiletLatLng).title(toilet.Commune))
+//        }
         getLocation()
+        setUpClusterManager(googleMap)
     }
     private fun isLocationEnabled(): Boolean {
         val locationManager: LocationManager =
@@ -140,9 +142,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
             } else {
-//                Toast.makeText(this.context, "Please turn on location", Toast.LENGTH_LONG).show()
-//                val intent = Intent(BassBoost.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-//                startActivity(intent)
+               Toast.makeText(this.context, "Please turn on location", Toast.LENGTH_LONG).show()
             }
         } else {
             requestPermissions()
@@ -188,5 +188,19 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             val firstToiletLatLng = LatLng(firstToilet.PointGeo.lat, firstToilet.PointGeo.lon)
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstToiletLatLng, 10f))
         }
+    }
+
+    private fun setUpClusterManager(gMap : GoogleMap){
+        val clusterManager = ClusterManager<MapCluster>(this.context, gMap)
+        gMap.setOnCameraIdleListener(clusterManager)
+        gMap.setOnMarkerClickListener(clusterManager)
+        gMap.setOnInfoWindowClickListener(clusterManager)
+        mapClusters = getAllClusters()
+        clusterManager.addItems(mapClusters)
+        clusterManager.cluster()
+    }
+
+    private fun getAllClusters(): List<MapCluster> {
+        return toiletList.map { MapCluster(it.Commune, it.PointGeo) }
     }
 }

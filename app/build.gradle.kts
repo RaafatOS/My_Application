@@ -56,4 +56,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.google.maps.android:android-maps-utils:2.2.4")
 }
